@@ -9,7 +9,8 @@ import {
   Grid,
   Columns
 } from 'lucide-react';
-import { PRODUCTS, COLLECTIONS } from '../../data/products';
+import { COLLECTIONS } from '../../data/products';
+import { useProductsStore } from '../../store/useProductsStore';
 import { ProductCard } from '../../components/product/ProductCard';
 import { QuickViewModal } from '../../components/product/QuickViewModal';
 import { SEO } from '../../components/common/SEO';
@@ -28,6 +29,7 @@ const ALL_PATTERNS = [
 ];
 
 export function Shop({ defaultCategory = 'all' }) {
+  const { products: liveProducts, loading: isLoadingProducts } = useProductsStore();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
@@ -59,7 +61,7 @@ export function Shop({ defaultCategory = 'all' }) {
 
   // Filter products logic
   const filteredProducts = useMemo(() => {
-    let result = [...PRODUCTS];
+    let result = [...liveProducts];
 
     if (category && category !== 'all') {
       result = result.filter(

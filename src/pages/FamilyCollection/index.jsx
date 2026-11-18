@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PRODUCTS } from '../../data/products';
+import { useProductsStore } from '../../store/useProductsStore';
 import { ProductCard } from '../../components/product/ProductCard';
 import { QuickViewModal } from '../../components/product/QuickViewModal';
 import { SEO } from '../../components/common/SEO';
 
 export function FamilyCollection() {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
-  const familyProducts = PRODUCTS.filter((p) => p.category === 'family');
+  const { products: liveProducts } = useProductsStore();
+  const familyProducts = liveProducts.filter((p) => p.category === 'family');
 
   return (
     <div className="bg-[#FAFAFA] dark:bg-[#0E0E0E] text-black dark:text-white transition-colors duration-300 min-h-screen">

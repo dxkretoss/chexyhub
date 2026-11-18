@@ -9,7 +9,7 @@ import {
   ChevronUp,
   Maximize2
 } from 'lucide-react';
-import { PRODUCTS } from '../../data/products';
+import { useProductsStore } from '../../store/useProductsStore';
 import { formatPrice } from '../../utils/formatters';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
@@ -22,14 +22,23 @@ import { toast } from 'sonner';
 export function ProductDetails() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const { products: liveProducts, loading: isLoading } = useProductsStore();
 
-  const product = PRODUCTS.find((p) => p.slug === slug) || PRODUCTS[0];
+  const product = liveProducts.find((p) => p.slug === slug || p.id === slug);
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedColor, setSelectedColor] = useState({ name: 'Classic', hex: '#000' });
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(product.images?.[0] || product.thumbnail || '');
+      setSelectedSize(product.sizes?.[0] || 'M');
+      setSelectedColor(product.colors?.[0] || { name: 'Classic', hex: '#000' });
+    }
+  }, [product]);
 
   // Accordion state
   const [openAccordion, setOpenAccordion] = useState('composition'); // 'composition', 'fit', 'shipping'
@@ -70,8 +79,8 @@ export function ProductDetails() {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: product.name,
-        text: `Check out the ${product.name} at CHEXY HUB`,
+        title: product?.name || 'CHEXY HUB Shirt',
+        text: `Check out the ${product?.name} at CHEXY HUB`,
         url: window.location.href,
       }).catch(() => {});
     } else {
@@ -80,7 +89,29 @@ export function ProductDetails() {
     }
   };
 
-  const relatedProducts = PRODUCTS.filter(
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xs tracking-widest uppercase text-stone-500">
+        Loading atelier silhouette...
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-center p-6 space-y-4">
+        <h2 className="font-serif text-2xl">Piece Not Found</h2>
+        <p className="text-xs text-stone-500 uppercase tracking-widest">
+          This checkered shirt piece may have been updated or moved.
+        </p>
+        <Link to="/shop" className="px-6 py-2.5 bg-black text-white dark:bg-white dark:text-black text-xs uppercase tracking-widest font-bold">
+          Return to Catalogue
+        </Link>
+      </div>
+    );
+  }
+
+  const relatedProducts = liveProducts.filter(
     (p) => p.category === product.category && p.id !== product.id
   ).slice(0, 4);
 

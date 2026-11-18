@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, X, ArrowRight } from 'lucide-react';
-import { PRODUCTS } from '../../data/products';
+import { useProductsStore } from '../../store/useProductsStore';
 import { formatPrice } from '../../utils/formatters';
 
 const POPULAR_SEARCHES = [
@@ -18,6 +18,7 @@ export function SearchOverlay({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const inputRef = useRef(null);
+  const { products: liveProducts } = useProductsStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -39,12 +40,12 @@ export function SearchOverlay({ isOpen, onClose }) {
       return;
     }
     const q = query.toLowerCase().trim();
-    const filtered = PRODUCTS.filter(
+    const filtered = liveProducts.filter(
       (p) =>
         p.name.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q) ||
         p.collection.toLowerCase().includes(q) ||
-        p.tags.some((t) => t.toLowerCase().includes(q))
+        p.tags?.some((t) => t.toLowerCase().includes(q))
     ).slice(0, 8);
     setResults(filtered);
   }, [query]);

@@ -6,14 +6,17 @@ import { Footer } from '../components/layout/Footer';
 import { CartDrawer } from '../components/cart/CartDrawer';
 import { ScrollToTop } from '../components/common/ScrollToTop';
 import { useThemeStore } from '../store/useThemeStore';
+import { useProductsStore } from '../store/useProductsStore';
 
 export function RootLayout() {
   const { initTheme } = useThemeStore();
+  const { fetchProducts } = useProductsStore();
   const location = useLocation();
 
   useEffect(() => {
     initTheme();
-  }, [initTheme]);
+    fetchProducts();
+  }, [initTheme, fetchProducts]);
 
   // Auth pages have their own dedicated full-bleed split-screen layout (Left: Image, Right: Form)
   const isAuthPage = ['/login', '/register', '/forgot-password'].includes(location.pathname);

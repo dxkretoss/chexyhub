@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PRODUCTS, INSTAGRAM_POSTS } from '../../data/products';
+import { INSTAGRAM_POSTS } from '../../data/products';
+import { useProductsStore } from '../../store/useProductsStore';
 import { ProductCard } from '../../components/product/ProductCard';
 import { QuickViewModal } from '../../components/product/QuickViewModal';
 import { SEO } from '../../components/common/SEO';
@@ -95,13 +96,15 @@ export function Home() {
     setCurrentSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
+  const { products: liveProducts } = useProductsStore();
+
   // Filter products for featured grid
-  const filteredProducts = PRODUCTS.filter((p) => {
+  const filteredProducts = liveProducts.filter((p) => {
     if (selectedCategoryTab === 'all') return p.isFeatured || p.isBestSeller;
     return p.category === selectedCategoryTab;
   }).slice(0, 8);
 
-  const newCollectionProducts = PRODUCTS.filter((p) => p.isNewArrival).slice(0, 4);
+  const newCollectionProducts = liveProducts.filter((p) => p.isNewArrival).slice(0, 4);
 
   return (
     <div className="bg-[#FAFAFA] dark:bg-[#0E0E0E] text-black dark:text-white transition-colors duration-300">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { formatPrice } from '../../utils/formatters';
 import { SEO } from '../../components/common/SEO';
@@ -18,96 +18,107 @@ export function Wishlist() {
   };
 
   return (
-    <>
+    <div className="bg-[#FAFAFA] dark:bg-[#0E0E0E] text-black dark:text-white transition-colors duration-300 min-h-screen">
       <SEO
         title="My Wishlist | CHEXY HUB"
         description="View your saved checkered shirts and move them directly to your shopping bag."
       />
 
-      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-6 mb-8 border-b border-stone-200 dark:border-stone-800">
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-8 max-w-[1600px] mx-auto w-full">
+        {/* Editorial Header */}
+        <div className="pb-6 mb-8 border-b border-black/10 dark:border-white/10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs uppercase font-bold tracking-widest text-terracotta block mb-1">
-              Saved Favorites
-            </span>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal dark:text-dark-text">
-              My Wishlist ({items.length})
+            <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 mb-2">
+              <span>PERSONAL ATELIER</span>
+              <span>•</span>
+              <span>SAVED PIECES</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-5xl font-normal tracking-tight text-black dark:text-white">
+              MY WISHLIST ({items.length})
             </h1>
           </div>
           {items.length > 0 && (
             <button
               onClick={clearWishlist}
-              className="mt-3 sm:mt-0 text-xs font-semibold text-secondary-gray hover:text-rose-600 transition-colors"
+              className="text-[11px] font-bold uppercase tracking-[0.2em] text-stone-500 hover:text-black dark:hover:text-white transition-colors self-start sm:self-auto underline underline-offset-4"
             >
-              Clear Wishlist
+              Clear All Selection
             </button>
           )}
         </div>
 
         {items.length === 0 ? (
-          <div className="py-20 flex flex-col items-center justify-center text-center p-8 rounded-3xl glass dark:glass-dark border border-stone-200 dark:border-stone-800 max-w-md mx-auto">
-            <div className="w-16 h-16 rounded-full bg-terracotta/10 text-terracotta flex items-center justify-center mb-4">
-              <Heart className="w-8 h-8" />
-            </div>
-            <h2 className="font-serif text-2xl font-bold mb-2">Your Wishlist is Empty</h2>
-            <p className="text-sm text-secondary-gray mb-6">
-              Save your favorite check shirts to keep track of new arrivals and seasonal offers.
+          <div className="py-24 max-w-md mx-auto text-center space-y-6">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block">
+              Curated Wardrobe
+            </span>
+            <h2 className="font-serif text-2xl sm:text-3xl font-normal text-black dark:text-white">
+              YOUR SELECTION IS EMPTY.
+            </h2>
+            <p className="text-xs text-stone-500 dark:text-stone-400 font-light leading-relaxed">
+              Explore our checkered collections for Woman, Man, Kids, and Family to save your favorite silhouettes.
             </p>
-            <Link
-              to="/shop"
-              className="px-6 py-3 rounded-full bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold transition-colors shadow-md"
-            >
-              Explore Collection
-            </Link>
+            <div className="pt-4">
+              <Link
+                to="/shop"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-[0.25em] transition-opacity hover:opacity-80"
+              >
+                <span>Discover Collection</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-12">
             {items.map((item) => (
-              <div
-                key={item.id}
-                className="group relative flex flex-col rounded-2xl bg-white dark:bg-dark-card border border-stone-200 dark:border-dark-border overflow-hidden shadow-sm hover:shadow-card-hover transition-all"
-              >
-                {/* Image */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
-                  <Link to={`/product/${item.slug}`}>
+              <div key={item.id} className="group relative flex flex-col select-none">
+                {/* Image Container with Quick Remove Action */}
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-100 dark:bg-stone-900 mb-4">
+                  <Link to={`/product/${item.slug}`} className="block w-full h-full">
                     <img
                       src={item.thumbnail}
                       alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   </Link>
                   <button
                     onClick={() => removeFromWishlist(item.id)}
-                    className="absolute top-3 right-3 p-2 rounded-full glass dark:glass-dark text-stone-500 hover:text-rose-500 transition-colors shadow-sm"
+                    className="absolute top-3 right-3 p-2 bg-white/90 dark:bg-black/90 backdrop-blur-sm text-black dark:text-white hover:opacity-60 transition-opacity"
                     title="Remove from wishlist"
+                    aria-label="Remove item"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Details */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
+                {/* Garment Details */}
+                <div className="space-y-1 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-terracotta">
-                      {item.category}
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400 block">
+                      {item.collection || item.category}
                     </span>
                     <Link to={`/product/${item.slug}`}>
-                      <h3 className="font-semibold text-sm text-charcoal dark:text-dark-text line-clamp-1 mt-0.5 hover:text-terracotta transition-colors">
+                      <h3 className="text-xs font-medium uppercase tracking-wider text-black dark:text-white truncate hover:opacity-60 transition-opacity mt-0.5">
                         {item.name}
                       </h3>
                     </Link>
-                    <p className="text-base font-bold text-charcoal dark:text-dark-text mt-2">
-                      {formatPrice(item.price)}
-                    </p>
+                    <div className="flex items-baseline gap-2 pt-1">
+                      <span className="text-xs font-bold tracking-wider text-black dark:text-white">
+                        {formatPrice(item.price)}
+                      </span>
+                      {item.originalPrice && (
+                        <span className="text-[11px] text-stone-400 line-through">
+                          {formatPrice(item.originalPrice)}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <button
                     onClick={() => handleMoveToCart(item)}
-                    className="mt-4 w-full py-2.5 px-4 rounded-xl bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+                    className="mt-4 w-full py-3 bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold uppercase tracking-[0.2em] transition-opacity hover:opacity-85 text-center"
                   >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    <span>Move to Bag</span>
+                    Move to Shopping Bag
                   </button>
                 </div>
               </div>
@@ -115,6 +126,6 @@ export function Wishlist() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Toaster } from 'sonner';
+import { Toaster } from './components/common/CustomToast';
 import { RootLayout } from './layouts/RootLayout';
 
 // Pages
@@ -11,7 +11,6 @@ import { Women } from './pages/Women';
 import { Kids } from './pages/Kids';
 import { FamilyCollection } from './pages/FamilyCollection';
 import { ProductDetails } from './pages/ProductDetails';
-import { Studio3D } from './pages/Studio3D';
 import { Wishlist } from './pages/Wishlist';
 import { Cart } from './pages/Cart';
 import { Checkout } from './pages/Checkout';
@@ -38,16 +37,7 @@ import { NotFound } from './pages/NotFound';
 export default function App() {
   return (
     <>
-      <Toaster
-        position="top-right"
-        richColors
-        closeButton
-        toastOptions={{
-          style: {
-            borderRadius: '1rem',
-          },
-        }}
-      />
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<RootLayout />}>
           {/* Main Browsing Routes */}
@@ -58,7 +48,6 @@ export default function App() {
           <Route path="kids" element={<Kids />} />
           <Route path="family-collection" element={<FamilyCollection />} />
           <Route path="product/:slug" element={<ProductDetails />} />
-          <Route path="3d-studio" element={<Studio3D />} />
 
           {/* Commerce Routes */}
           <Route path="wishlist" element={<Wishlist />} />

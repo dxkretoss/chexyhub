@@ -16,11 +16,10 @@ export const PRODUCTS = [
     originalPrice: 3999,
     discount: 38,
     images: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1754028893373-36c9c5a5c69f?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Heritage Navy & Crimson', hex: '#1C2841', secondary: '#B74737' },
       { name: 'Forest Green Tartan', hex: '#1E3F20', secondary: '#C9BBA6' },
@@ -70,10 +69,10 @@ export const PRODUCTS = [
     originalPrice: 4299,
     discount: 33,
     images: [
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1599837855737-d15830f71159?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1782226728289-f81457b760f5?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1599837855737-d15830f71159?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Black & Pure White', hex: '#111111', secondary: '#F7F5F0' },
       { name: 'Oatmeal & Terracotta', hex: '#EDE7DC', secondary: '#B74737' }
@@ -121,10 +120,10 @@ export const PRODUCTS = [
     originalPrice: 3199,
     discount: 31,
     images: [
-      'https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1782227293813-040b9f9ce99e?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1589310243389-96a5483213a8?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1565538810643-b5bdb714032a?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Warm Terracotta Sand', hex: '#B74737', secondary: '#F7F5F0' },
       { name: 'Sage Minimalist', hex: '#7A8B7B', secondary: '#EDE7DC' }
@@ -172,10 +171,10 @@ export const PRODUCTS = [
     originalPrice: 2799,
     discount: 29,
     images: [
-      'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1616587894417-b93dfd1f700a?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1472162314594-eca3c3d90df1?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1616587894417-b93dfd1f700a?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Indigo & Ochre', hex: '#263859', secondary: '#E3A857' },
       { name: 'Teal & Rust', hex: '#2A6F68', secondary: '#B74737' }
@@ -223,10 +222,10 @@ export const PRODUCTS = [
     originalPrice: 3499,
     discount: 34,
     images: [
-      'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1562245374-f3cd0b4344fd?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1472162314594-eca3c3d90df1?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1562245374-f3cd0b4344fd?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Navy & White Gingham', hex: '#1B263B', secondary: '#FFFFFF' },
       { name: 'Sky Blue Gingham', hex: '#4A7C9B', secondary: '#FFFFFF' }
@@ -274,10 +273,10 @@ export const PRODUCTS = [
     originalPrice: 3899,
     discount: 31,
     images: [
-      'https://images.unsplash.com/photo-1620012253295-c15c429fccf8?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1782227293813-040b9f9ce99e?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1782227286076-4f5153a8cdac?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1620012253295-c15c429fccf8?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1782227293813-040b9f9ce99e?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Olive Shadow & Amber', hex: '#3B4D3C', secondary: '#C28448' },
       { name: 'Burgundy Shadow', hex: '#582129', secondary: '#171717' }
@@ -327,11 +326,10 @@ export const PRODUCTS = [
     originalPrice: 3699,
     discount: 35,
     images: [
-      'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1612190377025-76afa396bc20?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1612190377025-76afa396bc20?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Terracotta & Ivory', hex: '#B74737', secondary: '#F7F5F0' },
       { name: 'Espresso & Latte', hex: '#3E2723', secondary: '#EDE7DC' },
@@ -381,10 +379,10 @@ export const PRODUCTS = [
     originalPrice: 2899,
     discount: 31,
     images: [
-      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1472486857583-bce702f98e33?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1771757019737-4468ded75c97?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1472486857583-bce702f98e33?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Powder Blue Gingham', hex: '#8EADC2', secondary: '#FFFFFF' },
       { name: 'Blush Rose Gingham', hex: '#D89E9E', secondary: '#FFFFFF' },
@@ -433,10 +431,10 @@ export const PRODUCTS = [
     originalPrice: 3799,
     discount: 32,
     images: [
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1601610694617-a2bf5b5e35f8?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1612190377025-76afa396bc20?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1601610694617-a2bf5b5e35f8?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Oatmeal & Slate Windowpane', hex: '#EDE7DC', secondary: '#2F3E46' },
       { name: 'Charcoal & Chalk', hex: '#222222', secondary: '#F7F5F0' }
@@ -484,10 +482,10 @@ export const PRODUCTS = [
     originalPrice: 3299,
     discount: 30,
     images: [
-      'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1611367540679-d94566094025?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1608846174341-4dc80d064569?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1611367540679-d94566094025?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Ruby Tartan', hex: '#B74737', secondary: '#1C2841' },
       { name: 'Emerald Plaid', hex: '#1C3124', secondary: '#B74737' }
@@ -535,10 +533,10 @@ export const PRODUCTS = [
     originalPrice: 3099,
     discount: 29,
     images: [
-      'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1594910060840-8dab02697595?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1771757018593-ab138c0ec983?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1594910060840-8dab02697595?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Citrus & Aqua Madras', hex: '#E3A857', secondary: '#4A7C9B' },
       { name: 'Coral & Sand', hex: '#D47761', secondary: '#EDE7DC' }
@@ -585,10 +583,10 @@ export const PRODUCTS = [
     originalPrice: 4199,
     discount: 33,
     images: [
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1598137203946-3c19bf3f47b1?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1601610694617-a2bf5b5e35f8?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1598137203946-3c19bf3f47b1?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Black & Pure Chalk', hex: '#111111', secondary: '#F7F5F0' }
     ],
@@ -637,10 +635,10 @@ export const PRODUCTS = [
     originalPrice: 1999,
     discount: 30,
     images: [
-      'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1605488770576-8ac43c6a707d?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Royal Crimson & Navy', hex: '#B74737', secondary: '#1C2841' },
       { name: 'Forest Green', hex: '#1E3F20', secondary: '#C9BBA6' }
@@ -689,10 +687,10 @@ export const PRODUCTS = [
     originalPrice: 1699,
     discount: 29,
     images: [
-      'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1507514217837-da7e39d37edd?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1756106903021-aa1338f625b8?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1507514217837-da7e39d37edd?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Sunbeam Gingham', hex: '#EED596', secondary: '#FFFFFF' },
       { name: 'Sky Gingham', hex: '#8EADC2', secondary: '#FFFFFF' }
@@ -740,10 +738,10 @@ export const PRODUCTS = [
     originalPrice: 2299,
     discount: 30,
     images: [
-      'https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1605488770576-8ac43c6a707d?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1605488770576-8ac43c6a707d?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Red & Black Buffalo', hex: '#B74737', secondary: '#111111' },
       { name: 'Oatmeal & Navy', hex: '#EDE7DC', secondary: '#1C2841' }
@@ -792,10 +790,10 @@ export const PRODUCTS = [
     originalPrice: 1799,
     discount: 28,
     images: [
-      'https://images.unsplash.com/photo-1471286174890-9c112ffca564?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1756106903021-aa1338f625b8?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1507514217837-da7e39d37edd?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1471286174890-9c112ffca564?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1756106903021-aa1338f625b8?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Tropical Multi-Madras', hex: '#2A6F68', secondary: '#E3A857' }
     ],
@@ -844,11 +842,10 @@ export const PRODUCTS = [
     originalPrice: 8999,
     discount: 33,
     images: [
-      'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1777256005572-a5b4a0fe7a40?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Crimson & Navy Tartan Set', hex: '#B74737', secondary: '#1C2841' },
       { name: 'Emerald & Gold Set', hex: '#1E3F20', secondary: '#E3A857' }
@@ -895,10 +892,10 @@ export const PRODUCTS = [
     originalPrice: 5999,
     discount: 33,
     images: [
-      'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Black & Ivory Duo', hex: '#111111', secondary: '#F7F5F0' },
       { name: 'Red & Charcoal Duo', hex: '#B74737', secondary: '#171717' }
@@ -944,10 +941,10 @@ export const PRODUCTS = [
     originalPrice: 4999,
     discount: 30,
     images: [
-      'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1472486857583-bce702f98e33?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Powder Blue Gingham', hex: '#8EADC2', secondary: '#FFFFFF' },
       { name: 'Blush Rose Gingham', hex: '#D89E9E', secondary: '#FFFFFF' }
@@ -993,10 +990,10 @@ export const PRODUCTS = [
     originalPrice: 10999,
     discount: 32,
     images: [
-      'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1786564563703-372ac6a469dd?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Azure & Coral Madras Pack', hex: '#2A6F68', secondary: '#D47761' }
     ],
@@ -1042,10 +1039,10 @@ export const PRODUCTS = [
     originalPrice: 3199,
     discount: 31,
     images: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1472162314594-eca3c3d90df1?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1562245374-f3cd0b4344fd?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1472162314594-eca3c3d90df1?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Cobalt & White', hex: '#1E40AF', secondary: '#FFFFFF' }
     ],
@@ -1092,10 +1089,10 @@ export const PRODUCTS = [
     originalPrice: 3799,
     discount: 32,
     images: [
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1754028893373-36c9c5a5c69f?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1754028893373-36c9c5a5c69f?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Crimson & Midnight', hex: '#B74737', secondary: '#111111' }
     ],
@@ -1142,10 +1139,10 @@ export const PRODUCTS = [
     originalPrice: 3899,
     discount: 31,
     images: [
-      'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1612190377025-76afa396bc20?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Harvest Amber & Cream', hex: '#C28448', secondary: '#EDE7DC' }
     ],
@@ -1191,10 +1188,10 @@ export const PRODUCTS = [
     originalPrice: 4299,
     discount: 33,
     images: [
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1598137203946-3c19bf3f47b1?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1771757025528-f7b6727af2a9?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1598137203946-3c19bf3f47b1?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Emerald & Cream', hex: '#1C3124', secondary: '#F7F5F0' }
     ],
@@ -1241,10 +1238,10 @@ export const PRODUCTS = [
     originalPrice: 2099,
     discount: 29,
     images: [
-      'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1543332164-6e82f355badc?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1605488770576-8ac43c6a707d?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1756106903021-aa1338f625b8?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1605488770576-8ac43c6a707d?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Monochrome Skater Check', hex: '#111111', secondary: '#F7F5F0' }
     ],
@@ -1291,10 +1288,10 @@ export const PRODUCTS = [
     originalPrice: 1799,
     discount: 28,
     images: [
-      'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=1000&q=80'
+      'https://images.unsplash.com/photo-1507514217837-da7e39d37edd?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=1000&q=80'
     ],
-    thumbnail: 'https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=600&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1507514217837-da7e39d37edd?auto=format&fit=crop&w=600&q=80',
     colors: [
       { name: 'Rose & Cream Gingham', hex: '#D89E9E', secondary: '#FFFFFF' }
     ],
@@ -1345,28 +1342,28 @@ export const CATEGORIES = [
     id: 'men',
     name: 'Men',
     tagline: 'Everyday classics. Effortless confidence.',
-    image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=800&q=80',
     description: 'Structured button-downs, brushed flannels, and crisp gingham tailored to perfection.'
   },
   {
     id: 'women',
     name: 'Women',
     tagline: 'Modern patterns. Timeless elegance.',
-    image: 'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=800&q=80',
     description: 'Boyfriend overshirts, cropped gingham blouses, and fluid tunics cut for contemporary styling.'
   },
   {
     id: 'kids',
     name: 'Kids',
     tagline: 'Little styles. Big personalities.',
-    image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=800&q=80',
     description: 'Hypoallergenic organic cotton, snap closures, and cheerful patterns made for active play.'
   },
   {
     id: 'family',
     name: 'Family Collection',
     tagline: 'One pattern. Endless connections.',
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=800&q=80',
     description: 'Harmonious matching check patterns for fathers, mothers, and kids to celebrate togetherness.'
   }
 ];
@@ -1374,42 +1371,42 @@ export const CATEGORIES = [
 export const INSTAGRAM_POSTS = [
   {
     id: 'ig-1',
-    image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=600&q=80',
     likes: '2.4k',
     caption: 'Autumn mornings in our signature Highland Royal Tartan #CheckYourStyle #CHEXYHUB',
     tag: '@chexyhub'
   },
   {
     id: 'ig-2',
-    image: 'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=600&q=80',
     likes: '4.1k',
     caption: 'Effortless oversized layering in Parisian Terracotta #OOTD #ModernCheck',
     tag: '@chexyhub'
   },
   {
     id: 'ig-3',
-    image: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1602848137189-ad9301200244?auto=format&fit=crop&w=600&q=80',
     likes: '5.8k',
-    caption: 'Father & Son weekend road trip in matching Buffalo Plaid #FamilyCollection #CHEXYFamily',
+    caption: 'Matching weekend flannel checks #FamilyCollection #CHEXYFamily',
     tag: '@chexyhub'
   },
   {
     id: 'ig-4',
-    image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1599837855737-d15830f71159?auto=format&fit=crop&w=600&q=80',
     likes: '1.9k',
-    caption: 'Monochrome street aesthetics. Heavyweight twill for chilly evenings #Streetwear',
+    caption: 'Monochrome check aesthetics. Heavyweight twill for chilly evenings #Streetwear',
     tag: '@chexyhub'
   },
   {
     id: 'ig-5',
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1598137203946-3c19bf3f47b1?auto=format&fit=crop&w=600&q=80',
     likes: '3.6k',
-    caption: 'Sunny afternoons in Provençal Pastel Gingham #SunDrenched #PastelFashion',
+    caption: 'Forest walks in deep emerald flannel check #SunDrenched #PastelFashion',
     tag: '@chexyhub'
   },
   {
     id: 'ig-6',
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1627278107893-b89d828d4ff3?auto=format&fit=crop&w=600&q=80',
     likes: '6.2k',
     caption: 'One pattern, endless memories. Celebrating moments together #FamilyFirst',
     tag: '@chexyhub'

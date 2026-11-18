@@ -11,34 +11,31 @@ export function NotFound() {
         description="The requested page could not be found on CHEXY HUB."
       />
 
-      <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-lg mx-auto text-center flex flex-col items-center">
-        <div className="w-20 h-20 rounded-3xl bg-terracotta/10 text-terracotta flex items-center justify-center font-serif text-3xl font-extrabold mb-6 shadow-sm">
-          404
-        </div>
-        <span className="text-xs font-bold uppercase tracking-widest text-terracotta block mb-2">
-          Off The Pattern
+      <div className="pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-lg mx-auto text-center flex flex-col items-center">
+        <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block mb-2">
+          ERROR 404 • ARCHIVE NOT FOUND
         </span>
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-charcoal dark:text-dark-text mb-3">
+        <h1 className="font-serif text-3xl sm:text-5xl font-normal text-black dark:text-white mb-3">
           Page Not Found
         </h1>
-        <p className="text-xs sm:text-sm text-secondary-gray leading-relaxed mb-8 max-w-sm">
-          The page you are looking for has been moved, renamed, or doesn’t exist in our current collection.
+        <p className="text-xs text-stone-500 font-light leading-relaxed mb-8 max-w-sm">
+          The editorial piece or archive you are looking for has been relocated or is currently unavailable.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <Link
             to="/"
-            className="px-6 py-3 rounded-2xl bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-md transition-colors"
+            className="px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-[0.22em] flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <Home className="w-4 h-4" />
-            <span>Return Home</span>
+            <Home className="w-3.5 h-3.5" />
+            <span>Return to Boutique</span>
           </Link>
           <Link
             to="/shop"
-            className="px-6 py-3 rounded-2xl border border-stone-200 dark:border-stone-700 text-charcoal dark:text-dark-text hover:bg-stone-100 dark:hover:bg-stone-800 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+            className="px-8 py-3.5 border border-black dark:border-white text-black dark:text-white text-xs font-bold uppercase tracking-[0.22em] flex items-center justify-center gap-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
-            <Compass className="w-4 h-4 text-terracotta" />
-            <span>Explore Shop</span>
+            <Compass className="w-3.5 h-3.5" />
+            <span>Explore Collection</span>
           </Link>
         </div>
       </div>

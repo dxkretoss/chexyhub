@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Eye, ShoppingBag, Box, Star } from 'lucide-react';
+import { Heart, Check } from 'lucide-react';
 import { formatPrice } from '../../utils/formatters';
 import { useWishlistStore } from '../../store/useWishlistStore';
 import { useCartStore } from '../../store/useCartStore';
@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 export function ProductCard({ product, onQuickView }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0] || null);
   const [isHovered, setIsHovered] = useState(false);
+  const [showSizes, setShowSizes] = useState(false);
 
   const { toggleWishlist, isInWishlist } = useWishlistStore();
   const { addItem } = useCartStore();
@@ -20,29 +21,22 @@ export function ProductCard({ product, onQuickView }) {
     e.stopPropagation();
     const added = toggleWishlist(product);
     if (added) {
-      toast.success(`Added "${product.name}" to wishlist`);
+      toast.success(`Saved to wishlist`);
     } else {
       toast.info(`Removed from wishlist`);
     }
   };
 
-  const handleQuickAdd = (e) => {
+  const handleSelectSize = (e, size) => {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, {
-      size: product.sizes[0],
+      size: size,
       color: selectedColor?.name || product.colors[0]?.name,
       quantity: 1,
     });
-    toast.success(`Added ${product.name} (Size: ${product.sizes[0]}) to cart`);
-  };
-
-  const handleQuickViewClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (onQuickView) {
-      onQuickView(product);
-    }
+    setShowSizes(false);
+    toast.success(`Added ${product.name} (Size: ${size}) to bag`);
   };
 
   // Primary image vs alternate hover image
@@ -51,142 +45,144 @@ export function ProductCard({ product, onQuickView }) {
 
   return (
     <div
-      className="group relative flex flex-col rounded-3xl glass-card border border-stone-200/80 dark:border-white/10 overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1"
+      className="group relative flex flex-col bg-white dark:bg-[#141414] select-none transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setShowSizes(false);
+      }}
     >
-      {/* Product Image Area */}
+      {/* Editorial Image Canvas */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-stone-100 dark:bg-stone-900">
         <Link to={`/product/${product.slug}`} className="block w-full h-full">
           <img
             src={isHovered && hoverImg !== primaryImg ? hoverImg : primaryImg}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
+            className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
         </Link>
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
-          {product.isBestSeller && (
-            <span className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full bg-charcoal text-white dark:bg-ivory dark:text-charcoal shadow-sm">
-              Bestseller
-            </span>
-          )}
-          {product.isNewArrival && (
-            <span className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full bg-terracotta text-white shadow-sm">
-              New Arrival
-            </span>
-          )}
-          {product.discount > 0 && !product.isNewArrival && !product.isBestSeller && (
-            <span className="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full bg-amber-600 text-white shadow-sm">
-              {product.discount}% Off
-            </span>
-          )}
-        </div>
+        {/* Subtle Minimal Editorial Label (Top Left) */}
+        {product.isNewArrival && (
+          <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-black bg-white/90 dark:bg-black/90 dark:text-white px-2 py-0.5 pointer-events-none">
+            New
+          </span>
+        )}
+        {product.isBestSeller && !product.isNewArrival && (
+          <span className="absolute top-3 left-3 text-[10px] font-bold uppercase tracking-widest text-black bg-white/90 dark:bg-black/90 dark:text-white px-2 py-0.5 pointer-events-none">
+            Editorial Pick
+          </span>
+        )}
 
-        {/* 3D studio badge indicator */}
-        <Link
-          to={`/3d-studio?product=${product.slug}`}
-          onClick={(e) => e.stopPropagation()}
-          className="absolute top-3 right-12 z-10 p-2 rounded-full glass dark:glass-dark text-charcoal dark:text-dark-text opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:text-terracotta"
-          title="View in 3D Studio"
-        >
-          <Box className="w-4 h-4" />
-        </Link>
-
-        {/* Wishlist Button */}
+        {/* Minimal Wishlist Heart (Top Right) */}
         <button
           onClick={handleWishlistToggle}
-          className={`absolute top-3 right-3 z-10 p-2 rounded-full glass dark:glass-dark transition-all duration-300 shadow-sm ${
+          className={`absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 p-2 transition-all duration-200 ${
             isFavorited
-              ? 'text-terracotta bg-white/90'
-              : 'text-stone-700 dark:text-stone-300 hover:text-terracotta'
+              ? 'opacity-100 text-terracotta'
+              : 'opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-black dark:text-white hover:scale-110'
           }`}
-          title={isFavorited ? 'Remove from wishlist' : 'Add to wishlist'}
+          title={isFavorited ? 'Remove from wishlist' : 'Save to wishlist'}
+          aria-label="Wishlist"
         >
-          <Heart className={`w-4 h-4 ${isFavorited ? 'fill-terracotta' : ''}`} />
+          <Heart
+            className={`w-4 h-4 transition-colors ${
+              isFavorited ? 'fill-terracotta text-terracotta' : 'fill-none'
+            }`}
+          />
         </button>
 
-        {/* Quick View & Quick Add Floating Bottom Bar on Hover */}
-        <div className="absolute bottom-3 inset-x-3 z-10 flex items-center gap-2 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-          <button
-            onClick={handleQuickViewClick}
-            className="flex-1 py-2.5 px-3 rounded-xl glass dark:glass-dark text-xs font-semibold text-charcoal dark:text-dark-text hover:bg-white dark:hover:bg-dark-card flex items-center justify-center gap-1.5 shadow-md transition-colors"
-          >
-            <Eye className="w-3.5 h-3.5" />
-            <span>Quick View</span>
-          </button>
-          <button
-            onClick={handleQuickAdd}
-            className="py-2.5 px-3.5 rounded-xl bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-md transition-colors"
-            title="Quick Add to Cart (Default Size)"
-          >
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Add</span>
-          </button>
+        {/* Zara-Style Slide-Up Quick Add to Bag Bar */}
+        <div
+          className={`absolute inset-x-0 bottom-0 z-10 transition-all duration-300 ease-out ${
+            isHovered
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-full opacity-0 pointer-events-none'
+          }`}
+        >
+          {showSizes ? (
+            <div className="bg-white/95 dark:bg-black/95 backdrop-blur-md p-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-1 overflow-x-auto">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mr-1 flex-shrink-0">
+                Size:
+              </span>
+              <div className="flex items-center gap-1.5 flex-1 justify-end flex-wrap sm:flex-nowrap">
+                {product.sizes.map((s) => (
+                  <button
+                    key={s}
+                    onClick={(e) => handleSelectSize(e, s)}
+                    className={`${
+                      s.length > 3 ? 'min-w-[42px] px-1.5' : 'w-7'
+                    } h-7 text-[10px] font-semibold whitespace-nowrap border border-stone-300 dark:border-stone-700 hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors flex items-center justify-center`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowSizes(true);
+              }}
+              className="w-full py-3 bg-black/90 dark:bg-white/90 text-white dark:text-black backdrop-blur-md text-[11px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-black dark:hover:bg-white flex items-center justify-center gap-2"
+            >
+              <span>+ Add to Bag</span>
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Product Content Details */}
-      <div className="flex flex-col p-4 flex-1">
-        {/* Category & Rating */}
-        <div className="flex items-center justify-between text-xs text-secondary-gray mb-1">
-          <span className="uppercase tracking-wider font-medium text-[11px]">
-            {product.category} • {product.collection}
-          </span>
-          <div className="flex items-center gap-1 text-amber-500 font-semibold">
-            <Star className="w-3 h-3 fill-amber-500" />
-            <span>{product.rating}</span>
-            <span className="text-secondary-gray font-normal text-[10px]">
-              ({product.reviewCount})
-            </span>
-          </div>
-        </div>
-
+      {/* Minimal Product Meta (Below Image) */}
+      <div className="pt-3 pb-2 flex flex-col">
         {/* Product Title */}
-        <Link to={`/product/${product.slug}`} className="group-hover:text-terracotta transition-colors">
-          <h3 className="text-sm font-semibold text-charcoal dark:text-dark-text line-clamp-1 mb-2">
-            {product.name}
-          </h3>
+        <Link
+          to={`/product/${product.slug}`}
+          className="text-xs font-medium tracking-wide text-black dark:text-white hover:underline transition-colors line-clamp-1"
+        >
+          {product.name}
         </Link>
 
-        {/* Price Row */}
-        <div className="flex items-baseline gap-2 mb-3 mt-auto">
-          <span className="text-base font-bold text-charcoal dark:text-dark-text">
+        {/* Pricing */}
+        <div className="flex items-baseline gap-2 mt-1">
+          <span className="text-xs font-semibold text-black dark:text-white tracking-wide">
             {formatPrice(product.price)}
           </span>
-          {product.originalPrice && product.originalPrice > product.price && (
-            <>
-              <span className="text-xs text-stone-400 line-through">
-                {formatPrice(product.originalPrice)}
-              </span>
-              <span className="text-xs font-semibold text-terracotta">
-                ({product.discount}% OFF)
-              </span>
-            </>
+          {product.originalPrice > product.price && (
+            <span className="text-[11px] text-stone-400 line-through">
+              {formatPrice(product.originalPrice)}
+            </span>
           )}
         </div>
 
-        {/* Color Swatches */}
+        {/* Minimal Color Swatches */}
         {product.colors && product.colors.length > 0 && (
-          <div className="flex items-center gap-1.5 pt-2 border-t border-stone-100 dark:border-stone-800">
-            {product.colors.map((color, idx) => (
+          <div className="flex items-center gap-1.5 mt-2">
+            {product.colors.slice(0, 4).map((c, i) => (
               <button
-                key={idx}
-                onClick={() => setSelectedColor(color)}
-                className={`relative w-4 h-4 rounded-full transition-transform ${
-                  selectedColor?.name === color.name
-                    ? 'ring-2 ring-terracotta ring-offset-1 scale-110'
-                    : 'opacity-75 hover:opacity-100'
+                key={i}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelectedColor(c);
+                }}
+                className={`w-2.5 h-2.5 rounded-full border transition-transform ${
+                  selectedColor?.name === c.name
+                    ? 'scale-125 border-black dark:border-white ring-1 ring-black/30 dark:ring-white/40'
+                    : 'border-black/20 hover:scale-110'
                 }`}
-                style={{ backgroundColor: color.hex }}
-                title={color.name}
+                style={{ backgroundColor: c.hex }}
+                title={c.name}
+                aria-label={c.name}
               />
             ))}
-            <span className="text-[11px] text-secondary-gray ml-auto">
-              {product.sizes.length} sizes
-            </span>
+            {product.colors.length > 4 && (
+              <span className="text-[10px] text-stone-400 font-light ml-0.5">
+                +{product.colors.length - 4}
+              </span>
+            )}
           </div>
         )}
       </div>

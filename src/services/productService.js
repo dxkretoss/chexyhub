@@ -26,7 +26,7 @@ export const productService = {
 
     if (filters.pattern && filters.pattern !== 'all') {
       result = result.filter(
-        (p) => p.model3D?.pattern === filters.pattern
+        (p) => (p.pattern || p.model3D?.pattern) === filters.pattern
       );
     }
 

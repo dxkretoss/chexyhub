@@ -17,7 +17,7 @@ const INITIAL_DEMO_ORDERS = [
         quantity: 1,
         size: 'L',
         color: 'Heritage Navy & Crimson',
-        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=300&q=80',
+        image: 'https://images.unsplash.com/photo-1623162905251-e98a25a45a67?auto=format&fit=crop&w=300&q=80',
         slug: 'oxford-royal-tartan-shirt'
       },
       {
@@ -27,7 +27,7 @@ const INITIAL_DEMO_ORDERS = [
         quantity: 1,
         size: 'M',
         color: 'Terracotta & Ivory',
-        image: 'https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=300&q=80',
+        image: 'https://images.unsplash.com/photo-1612190377025-76afa396bc20?auto=format&fit=crop&w=300&q=80',
         slug: 'parisian-oversized-terracotta-check'
       }
     ],

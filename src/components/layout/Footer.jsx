@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Send,
-  ShieldCheck,
-  Truck,
-  RotateCcw,
-  Sparkles,
-  Instagram,
-  Facebook,
-  Twitter,
-  Youtube,
-  Lock,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { newsletterService } from '../../services/newsletterService';
 import { toast } from 'sonner';
 
@@ -21,6 +10,10 @@ export function Footer() {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
     const result = newsletterService.subscribe(email);
     if (result.success) {
       toast.success(result.message);
@@ -32,259 +25,182 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-stone-100 dark:bg-[#121212] text-charcoal dark:text-dark-text border-t border-stone-200 dark:border-stone-800 transition-colors duration-300">
-      {/* 1. Value Propositions Banner */}
-      <div className="border-b border-stone-200 dark:border-stone-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center flex-shrink-0">
-                <Truck className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">Free Shipping</h4>
-                <p className="text-xs text-secondary-gray mt-0.5">On all prepaid orders above ₹1,999</p>
-              </div>
-            </div>
+    <footer className="bg-white dark:bg-[#0c0c0c] text-black dark:text-white border-t border-black/10 dark:border-white/10 transition-colors">
+      {/* 1. Minimal Fashion Newsletter Section */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-16 sm:py-20 border-b border-black/10 dark:border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+          <div className="lg:col-span-6 space-y-2">
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block">
+              Join the Atelier
+            </span>
+            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-black dark:text-white">
+              STAY INFORMED ABOUT NEW CAMPAIGNS.
+            </h3>
+            <p className="text-xs text-stone-500 dark:text-stone-400 font-light max-w-md">
+              Receive private previews of seasonal check releases, editorial lookbooks, and exclusive studio invitations.
+            </p>
+          </div>
 
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center flex-shrink-0">
-                <RotateCcw className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">Easy 15-Day Returns</h4>
-                <p className="text-xs text-secondary-gray mt-0.5">Hassle-free doorstep exchanges</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">100% Long-Staple Cotton</h4>
-                <p className="text-xs text-secondary-gray mt-0.5">Peached twills & yarn-dyed checks</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center flex-shrink-0">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider">Verified Razorpay Gateway</h4>
-                <p className="text-xs text-secondary-gray mt-0.5">256-bit encrypted secure checkout</p>
-              </div>
-            </div>
+          <div className="lg:col-span-6">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="ENTER YOUR EMAIL ADDRESS"
+                required
+                className="flex-1 bg-transparent border-b border-black dark:border-white py-3 text-xs tracking-wider uppercase placeholder:text-stone-400 focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="py-3 px-8 bg-black dark:bg-white text-white dark:text-black text-[11px] font-bold uppercase tracking-[0.2em] transition-opacity hover:opacity-80"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
       </div>
 
-      {/* 2. Main Footer Links & Newsletter */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-2.5">
-              <img
-                src="/assets/logo.png"
-                alt="CHEXY HUB"
-                className="h-10 w-auto object-contain dark:invert"
-              />
-            </Link>
-            <p className="text-sm text-secondary-gray leading-relaxed max-w-sm">
-              Check Your Style. A modern fashion destination where timeless check patterns meet contemporary tailoring. Crafted with love for men, women, kids, and matching family moments.
-            </p>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-3 pt-2">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full glass dark:glass-dark text-stone-600 dark:text-stone-300 hover:text-terracotta transition-colors"
-                title="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full glass dark:glass-dark text-stone-600 dark:text-stone-300 hover:text-terracotta transition-colors"
-                title="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full glass dark:glass-dark text-stone-600 dark:text-stone-300 hover:text-terracotta transition-colors"
-                title="Twitter"
-              >
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noreferrer"
-                className="p-2.5 rounded-full glass dark:glass-dark text-stone-600 dark:text-stone-300 hover:text-terracotta transition-colors"
-                title="YouTube"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Shop Columns */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-4">
-              Collections
-            </h3>
-            <ul className="space-y-2.5 text-sm text-secondary-gray">
+      {/* 2. Architectural Navigation Columns */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-16 sm:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          {/* Col 1: Collections */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+              COLLECTIONS
+            </h4>
+            <ul className="space-y-2.5 text-xs font-medium tracking-wider uppercase">
               <li>
-                <Link to="/men" className="hover:text-terracotta transition-colors">
-                  Men's Checks
+                <Link to="/women" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Woman
                 </Link>
               </li>
               <li>
-                <Link to="/women" className="hover:text-terracotta transition-colors">
-                  Women's Checks
+                <Link to="/men" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Man
                 </Link>
               </li>
               <li>
-                <Link to="/kids" className="hover:text-terracotta transition-colors">
-                  Kids & Junior Checks
+                <Link to="/kids" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Kids
                 </Link>
               </li>
               <li>
-                <Link to="/family-collection" className="hover:text-terracotta transition-colors">
-                  Family Matching Sets
+                <Link to="/family-collection" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Family Collection
                 </Link>
               </li>
               <li>
-                <Link to="/3d-studio" className="hover:text-terracotta transition-colors">
-                  Interactive 3D Studio
-                </Link>
-              </li>
-              <li>
-                <Link to="/shop" className="hover:text-terracotta transition-colors">
-                  All Checkered Shirts
+                <Link to="/shop?filter=new" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  New Arrivals
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Customer Care */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-4">
-              Customer Support
-            </h3>
-            <ul className="space-y-2.5 text-sm text-secondary-gray">
+          {/* Col 2: Client Services */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+              HELP & SUPPORT
+            </h4>
+            <ul className="space-y-2.5 text-xs font-medium tracking-wider uppercase">
               <li>
-                <Link to="/about" className="hover:text-terracotta transition-colors font-semibold text-charcoal dark:text-dark-text">
-                  About CHEXY HUB
+                <Link to="/contact" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Contact Us
                 </Link>
               </li>
               <li>
-                <Link to="/order-tracking" className="hover:text-terracotta transition-colors">
+                <Link to="/order-tracking" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
                   Track Your Order
                 </Link>
               </li>
               <li>
-                <Link to="/shipping-policy" className="hover:text-terracotta transition-colors">
+                <Link to="/shipping-policy" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
                   Shipping & Delivery
                 </Link>
               </li>
               <li>
-                <Link to="/return-policy" className="hover:text-terracotta transition-colors">
-                  15-Day Returns & Exchanges
+                <Link to="/return-policy" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Returns & Exchanges
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="hover:text-terracotta transition-colors">
+                <Link to="/faq" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
                   Frequently Asked Questions
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-terracotta transition-colors">
-                  Contact Our Concierge
-                </Link>
-              </li>
-              <li>
-                <Link to="/account/addresses" className="hover:text-terracotta transition-colors">
-                  Address Book
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Newsletter Box */}
-          <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-2">
-              Stay In Style
-            </h3>
-            <p className="text-xs text-secondary-gray mb-4 leading-relaxed">
-              Subscribe for early access to limited edition tartans and seasonal promotions.
-            </p>
-            <form onSubmit={handleSubscribe} className="space-y-2">
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full text-xs px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-charcoal dark:text-dark-text focus:outline-none focus:ring-1 focus:ring-terracotta"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full py-2.5 px-4 rounded-xl bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
-              >
-                <span>Subscribe</span>
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </form>
-            {isSubscribed && (
-              <p className="text-xs text-emerald-600 mt-2 font-medium">
-                Thank you for subscribing!
-              </p>
-            )}
+          {/* Col 3: The Label */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+              THE BRAND
+            </h4>
+            <ul className="space-y-2.5 text-xs font-medium tracking-wider uppercase">
+              <li>
+                <Link to="/about" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  About CHEXY HUB
+                </Link>
+              </li>
+              <li>
+                <span className="text-stone-400">Yarn-Dyed Craftsmanship</span>
+              </li>
+              <li>
+                <span className="text-stone-400">Sustainable Weaves</span>
+              </li>
+              <li>
+                <span className="text-stone-400">Press & Editorial</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Legal & Social */}
+          <div className="space-y-4">
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+              LEGAL & SOCIAL
+            </h4>
+            <ul className="space-y-2.5 text-xs font-medium tracking-wider uppercase">
+              <li>
+                <Link to="/privacy-policy" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms-and-conditions" className="text-stone-700 dark:text-stone-300 hover:text-black dark:hover:text-white transition-colors">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li className="pt-2">
+                <div className="flex gap-4 text-xs font-bold tracking-widest text-stone-600 dark:text-stone-400">
+                  <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white">
+                    INSTAGRAM
+                  </a>
+                  <a href="https://pinterest.com" target="_blank" rel="noreferrer" className="hover:text-black dark:hover:text-white">
+                    PINTEREST
+                  </a>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* 3. Bottom Bar: Payment Badges & Legal Links */}
-        <div className="mt-12 pt-8 border-t border-stone-200 dark:border-stone-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-secondary-gray">
-          <div>
-            <p>© {new Date().getFullYear()} CHEXY HUB. All rights reserved. Check Your Style™.</p>
-          </div>
-
-          {/* Secure Payment Badges */}
-          <div className="flex items-center gap-2 text-[11px] font-semibold">
-            <span className="flex items-center gap-1 text-stone-500">
-              <Lock className="w-3.5 h-3.5" />
-              <span>Razorpay Verified</span>
+      {/* 3. Bottom Bar: Brand Wordmark, Tagline, Currency, Copyright */}
+      <div className="border-t border-black/10 dark:border-white/10 py-8">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-stone-500 font-light">
+          <div className="flex items-center gap-4">
+            <span className="font-bold tracking-[0.25em] text-black dark:text-white uppercase">
+              CHEXY HUB
             </span>
-            <span className="px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800">UPI</span>
-            <span className="px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800">RuPay</span>
-            <span className="px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800">Visa</span>
-            <span className="px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800">Mastercard</span>
-            <span className="px-2 py-0.5 rounded bg-stone-200 dark:bg-stone-800">NetBanking</span>
+            <span className="hidden sm:inline text-stone-300 dark:text-stone-700">•</span>
+            <span className="tracking-widest uppercase">STYLE IS A STATEMENT</span>
           </div>
 
-          {/* Legal Links */}
-          <div className="flex items-center space-x-4">
-            <Link to="/about" className="hover:text-terracotta transition-colors">
-              About Us
-            </Link>
-            <Link to="/privacy-policy" className="hover:text-terracotta transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/terms-and-conditions" className="hover:text-terracotta transition-colors">
-              Terms & Conditions
-            </Link>
+          <div className="flex items-center gap-6">
+            <span>INDIA (INR ₹)</span>
+            <span>© {new Date().getFullYear()} CHEXY HUB. ALL RIGHTS RESERVED.</span>
           </div>
         </div>
       </div>

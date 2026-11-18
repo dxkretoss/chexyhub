@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 export function SEO({
   title = 'CHEXY HUB — Check Your Style | Premium Checkered Fashion',
   description = 'Discover premium checkered fashion for Men, Women, Kids and Matching Family Collections. Check your style with CHEXY HUB.',
-  image = 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1200&q=80',
+  image = 'https://images.unsplash.com/photo-1610886886310-be2828d6afd5?auto=format&fit=crop&w=1200&q=80',
   url = 'https://chexyhub.com',
 }) {
   const fullTitle = title.includes('CHEXY HUB') ? title : `${title} | CHEXY HUB`;

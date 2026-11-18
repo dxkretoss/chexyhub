@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, Search } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { SEO } from '../../components/common/SEO';
 
 const FAQS = [
@@ -51,15 +51,15 @@ const FAQS = [
     ]
   },
   {
-    category: 'Interactive 3D Studio',
+    category: 'Tailoring & Care',
     questions: [
       {
-        q: 'How does the 3D Studio work?',
-        a: 'Our 3D Studio utilizes modern WebGL and Three.js technologies to dynamically render 3D shirt models with mathematically accurate fabric weaves, plackets, collar types, and pattern scales in real-time.'
+        q: 'How should I care for my 100% long-staple cotton shirt?',
+        a: 'We recommend gentle machine wash at 30°C with similar colors. Line dry in shade and iron while slightly damp to maintain weave crispness and vibrant pattern pigments.'
       },
       {
-        q: 'Can I purchase a shirt customized in the 3D studio?',
-        a: 'Yes! You can click "Add Styled Shirt to Bag" directly from the 3D studio, and our master cutters will tailor the exact pattern scale and collar configuration chosen.'
+        q: 'Do your checkered patterns match across seams and plackets?',
+        a: 'Yes. Every CHEXY HUB garment is pattern-matched by hand across front plackets, chest pockets, and shoulder yokes to ensure seamless symmetry.'
       }
     ]
   }
@@ -68,7 +68,6 @@ const FAQS = [
 export function FAQ() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [openIndex, setOpenIndex] = useState(null);
-  const [search, setSearch] = useState('');
 
   const toggleAccordion = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -79,36 +78,40 @@ export function FAQ() {
   );
 
   return (
-    <>
+    <div className="bg-[#FAFAFA] dark:bg-[#0E0E0E] text-black dark:text-white transition-colors duration-300 min-h-screen">
       <SEO
         title="Frequently Asked Questions (FAQ) | CHEXY HUB"
-        description="Find answers regarding orders, sizing, 3D visualization, and returns on CHEXY HUB."
+        description="Find answers regarding orders, sizing, tailoring craftsmanship, and returns on CHEXY HUB."
       />
 
-      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <span className="text-xs uppercase font-bold tracking-widest text-terracotta block mb-1">
-            Help Center
-          </span>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal dark:text-dark-text">
-            Frequently Asked Questions
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-8 max-w-[1200px] mx-auto w-full">
+        {/* Editorial Header */}
+        <div className="pb-6 sm:pb-8 border-b border-black/10 dark:border-white/10">
+          <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 mb-2">
+            <span>CLIENT ADVISORY</span>
+            <span>•</span>
+            <span>KNOWLEDGE BASE</span>
+          </div>
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-black dark:text-white">
+            FREQUENTLY ASKED QUESTIONS
           </h1>
-          <p className="text-xs sm:text-sm text-secondary-gray mt-2">
-            Everything you need to know about our checkered fabrics, fit guide, and ordering process.
+          <p className="text-xs sm:text-sm font-light text-stone-600 dark:text-stone-400 max-w-2xl mt-3 leading-relaxed">
+            Essential information regarding our yarn-dyed checks, sizing parameters, doorstep delivery,
+            and 15-day complimentary exchange service.
           </p>
         </div>
 
-        {/* Category Pills */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {['All', 'Orders & Delivery', 'Fabrics & Sizing', 'Returns & Exchanges', 'Interactive 3D Studio'].map(
+        {/* Minimal Category Tabs */}
+        <div className="flex flex-wrap gap-6 border-b border-black/10 dark:border-white/10 py-6 mb-12">
+          {['All', 'Orders & Delivery', 'Fabrics & Sizing', 'Returns & Exchanges', 'Tailoring & Care'].map(
             (c) => (
               <button
                 key={c}
                 onClick={() => setActiveCategory(c)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative pb-2 ${
                   activeCategory === c
-                    ? 'bg-terracotta text-white shadow-sm'
-                    : 'glass dark:glass-dark text-stone-700 dark:text-stone-300 hover:text-charcoal'
+                    ? 'text-black dark:text-white after:content-[""] after:absolute after:bottom-0 after:inset-x-0 after:h-[1px] after:bg-black dark:after:bg-white'
+                    : 'text-stone-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 {c}
@@ -117,39 +120,35 @@ export function FAQ() {
           )}
         </div>
 
-        {/* Accordions */}
-        <div className="space-y-8">
+        {/* Structured Editorial Accordion */}
+        <div className="space-y-12">
           {filteredCategories.map((cat, catIdx) => (
-            <div key={catIdx} className="space-y-3">
-              <h2 className="font-serif text-lg font-bold text-charcoal dark:text-dark-text flex items-center gap-2 pb-2 border-b border-stone-200 dark:border-stone-800">
-                <HelpCircle className="w-4 h-4 text-terracotta" />
-                <span>{cat.category}</span>
-              </h2>
+            <div key={catIdx} className="space-y-4">
+              <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block pb-2 border-b border-black/10 dark:border-white/10">
+                {cat.category}
+              </span>
 
-              <div className="space-y-3">
+              <div className="divide-y divide-black/10 dark:border-white/10">
                 {cat.questions.map((faq, i) => {
                   const globalIdx = `${catIdx}-${i}`;
                   const isOpen = openIndex === globalIdx;
 
                   return (
-                    <div
-                      key={i}
-                      className="rounded-2xl glass dark:glass-dark border border-stone-200/80 dark:border-stone-800 overflow-hidden shadow-sm"
-                    >
+                    <div key={i} className="py-5">
                       <button
                         onClick={() => toggleAccordion(globalIdx)}
-                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between text-xs sm:text-sm font-bold text-charcoal dark:text-dark-text gap-4"
+                        className="w-full text-left flex items-center justify-between text-xs sm:text-sm font-bold uppercase tracking-wider text-black dark:text-white gap-4 group"
                       >
-                        <span>{faq.q}</span>
+                        <span className="group-hover:opacity-70 transition-opacity">{faq.q}</span>
                         <ChevronDown
-                          className={`w-4 h-4 text-secondary-gray flex-shrink-0 transition-transform duration-300 ${
-                            isOpen ? 'rotate-180 text-terracotta' : ''
+                          className={`w-4 h-4 text-stone-400 flex-shrink-0 transition-transform duration-300 ${
+                            isOpen ? 'rotate-180 text-black dark:text-white' : ''
                           }`}
                         />
                       </button>
 
                       {isOpen && (
-                        <div className="px-4 pb-5 sm:px-5 text-xs text-secondary-gray leading-relaxed border-t border-stone-100 dark:border-stone-800/80 pt-3">
+                        <div className="pt-4 text-xs sm:text-sm font-light text-stone-600 dark:text-stone-300 leading-relaxed max-w-3xl animate-fade-in">
                           {faq.a}
                         </div>
                       )}
@@ -160,7 +159,20 @@ export function FAQ() {
             </div>
           ))}
         </div>
+
+        {/* Direct Contact Footer */}
+        <div className="mt-16 pt-8 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-stone-500 font-light">
+          <p>
+            Have an unanswered question? Contact our atelier desk at{' '}
+            <a href="mailto:concierge@chexyhub.com" className="text-black dark:text-white font-medium hover:underline">
+              concierge@chexyhub.com
+            </a>
+          </p>
+          <p className="uppercase tracking-widest text-[10px]">
+            STYLE IS A STATEMENT • CHEXY HUB
+          </p>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

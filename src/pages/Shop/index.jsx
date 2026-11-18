@@ -4,21 +4,23 @@ import {
   SlidersHorizontal,
   X,
   ChevronDown,
-  Filter,
   RotateCcw,
   Search,
-  Sparkles,
+  Grid,
+  Columns
 } from 'lucide-react';
-import { PRODUCTS, COLLECTIONS, CATEGORIES } from '../../data/products';
+import { PRODUCTS, COLLECTIONS } from '../../data/products';
 import { ProductCard } from '../../components/product/ProductCard';
 import { QuickViewModal } from '../../components/product/QuickViewModal';
 import { SEO } from '../../components/common/SEO';
 import { formatPrice } from '../../utils/formatters';
 
-const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3-4Y', '5-6Y', '7-8Y', '9-10Y', '11-12Y'];
+const ADULT_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const KIDS_SIZES = ['3-4Y', '5-6Y', '7-8Y', '9-10Y', '11-12Y'];
+const ALL_SIZES = [...ADULT_SIZES, ...KIDS_SIZES];
 const ALL_PATTERNS = [
   { id: 'all', label: 'All Patterns' },
-  { id: 'tartan', label: 'Highland Tartan' },
+  { id: 'tartan', label: 'Scottish Tartan' },
   { id: 'buffalo', label: 'Buffalo Check' },
   { id: 'gingham', label: 'Gingham' },
   { id: 'windowpane', label: 'Windowpane' },
@@ -27,8 +29,9 @@ const ALL_PATTERNS = [
 
 export function Shop({ defaultCategory = 'all' }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [gridColumns, setGridColumns] = useState(4); // 2 for editorial, 4 for catalogue
 
   // Filter States
   const [category, setCategory] = useState(
@@ -41,11 +44,10 @@ export function Shop({ defaultCategory = 'all' }) {
   const [selectedSizes, setSelectedSizes] = useState([]);
   const [priceRange, setPriceRange] = useState([1000, 8000]);
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [discountOnly, setDiscountOnly] = useState(false);
   const [sortBy, setSortBy] = useState('featured');
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
 
-  // Keep category in sync if URL or prop changes
+  // Sync category if URL or prop changes
   useEffect(() => {
     const cat = searchParams.get('category') || defaultCategory;
     setCategory(cat);
@@ -70,7 +72,7 @@ export function Shop({ defaultCategory = 'all' }) {
     }
 
     if (selectedPattern !== 'all') {
-      result = result.filter((p) => p.model3D?.pattern === selectedPattern);
+      result = result.filter((p) => (p.pattern || p.model3D?.pattern) === selectedPattern);
     }
 
     if (selectedSizes.length > 0) {
@@ -87,37 +89,26 @@ export function Shop({ defaultCategory = 'all' }) {
       result = result.filter((p) => p.stockStatus !== 'Out of Stock');
     }
 
-    if (discountOnly) {
-      result = result.filter((p) => p.discount > 0);
-    }
-
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       result = result.filter(
         (p) =>
           p.name.toLowerCase().includes(q) ||
           p.description.toLowerCase().includes(q) ||
-          p.collection.toLowerCase().includes(q) ||
-          p.tags.some((t) => t.toLowerCase().includes(q))
+          p.collection.toLowerCase().includes(q)
       );
     }
 
     // Sorting
     switch (sortBy) {
-      case 'price-low':
+      case 'price-asc':
         result.sort((a, b) => a.price - b.price);
         break;
-      case 'price-high':
+      case 'price-desc':
         result.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
         result.sort((a, b) => (b.isNewArrival ? 1 : 0) - (a.isNewArrival ? 1 : 0));
-        break;
-      case 'bestselling':
-        result.sort((a, b) => b.reviewCount - a.reviewCount);
-        break;
-      case 'rating':
-        result.sort((a, b) => b.rating - a.rating);
         break;
       case 'featured':
       default:
@@ -133,7 +124,6 @@ export function Shop({ defaultCategory = 'all' }) {
     selectedSizes,
     priceRange,
     inStockOnly,
-    discountOnly,
     searchQuery,
     sortBy,
   ]);
@@ -144,6 +134,12 @@ export function Shop({ defaultCategory = 'all' }) {
     );
   };
 
+  const availableSizesToDisplay = useMemo(() => {
+    if (category === 'kids') return { adult: [], kids: KIDS_SIZES };
+    if (category === 'men' || category === 'women') return { adult: ADULT_SIZES, kids: [] };
+    return { adult: ADULT_SIZES, kids: KIDS_SIZES };
+  }, [category]);
+
   const handleClearAll = () => {
     setCategory('all');
     setSelectedCollection('all');
@@ -151,389 +147,372 @@ export function Shop({ defaultCategory = 'all' }) {
     setSelectedSizes([]);
     setPriceRange([1000, 8000]);
     setInStockOnly(false);
-    setDiscountOnly(false);
     setSearchQuery('');
     setSearchParams({});
   };
 
-  const hasActiveFilters =
-    category !== 'all' ||
-    selectedCollection !== 'all' ||
-    selectedPattern !== 'all' ||
-    selectedSizes.length > 0 ||
-    priceRange[0] > 1000 ||
-    priceRange[1] < 8000 ||
-    inStockOnly ||
-    discountOnly ||
-    searchQuery.trim() !== '';
+  const activeFilterCount =
+    (category !== 'all' ? 1 : 0) +
+    (selectedCollection !== 'all' ? 1 : 0) +
+    (selectedPattern !== 'all' ? 1 : 0) +
+    selectedSizes.length +
+    (inStockOnly ? 1 : 0) +
+    (searchQuery.trim() ? 1 : 0);
 
-  const FilterContent = () => (
-    <div className="space-y-6">
-      {/* Category Selection */}
-      <div>
-        <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-3">
-          Category
-        </h4>
-        <div className="space-y-1.5 text-xs">
+  const getPageTitle = () => {
+    if (category === 'women') return "WOMAN'S COLLECTION";
+    if (category === 'men') return "MAN'S COLLECTION";
+    if (category === 'kids') return "KIDS' COLLECTION";
+    if (category === 'family') return 'MATCHING FAMILY COLLECTION';
+    return 'ALL CHECK SHIRTS';
+  };
+
+  return (
+    <div className="bg-[#FAFAFA] dark:bg-[#0E0E0E] text-black dark:text-white transition-colors duration-300 min-h-screen">
+      <SEO
+        title={`${getPageTitle()} | CHEXY HUB`}
+        description="Explore the curated checkered fashion catalogue. Tailored check shirts for Woman, Man, Kids, and Family."
+      />
+
+      <div className="pt-24 sm:pt-28 pb-24 px-4 sm:px-8 max-w-[1600px] mx-auto w-full">
+        {/* Editorial Collection Header */}
+        <div className="pb-8 mb-8 border-b border-black/10 dark:border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400 block mb-1">
+              CHEXY HUB CATALOGUE
+            </span>
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal">
+              {getPageTitle()}
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-6 text-xs uppercase tracking-[0.2em] text-stone-400">
+            <span>{filteredProducts.length} DESIGNS AVAILABLE</span>
+          </div>
+        </div>
+
+        {/* Minimal Category Tabs */}
+        <div className="flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar pb-3 mb-6 text-xs font-bold uppercase tracking-[0.2em] border-b border-black/5 dark:border-white/5">
           {[
-            { id: 'all', label: 'All Collections' },
-            { id: 'men', label: "Men's Checks" },
-            { id: 'women', label: "Women's Checks" },
-            { id: 'kids', label: "Kids & Juniors" },
-            { id: 'family', label: "Matching Family Sets" },
+            { id: 'all', label: 'All Checks' },
+            { id: 'women', label: 'Woman' },
+            { id: 'men', label: 'Man' },
+            { id: 'kids', label: 'Kids' },
+            { id: 'family', label: 'Family Collection' },
           ].map((cat) => (
             <button
               key={cat.id}
               onClick={() => setCategory(cat.id)}
-              className={`w-full text-left px-3 py-2 rounded-xl transition-colors font-medium flex items-center justify-between ${
+              className={`pb-2 whitespace-nowrap transition-colors relative ${
                 category === cat.id
-                  ? 'bg-terracotta text-white font-bold shadow-sm'
-                  : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800'
+                  ? 'text-black dark:text-white after:content-[""] after:absolute after:bottom-0 after:inset-x-0 after:h-[1px] after:bg-black dark:after:bg-white'
+                  : 'text-stone-400 hover:text-black dark:hover:text-white'
               }`}
             >
-              <span>{cat.label}</span>
-              {category === cat.id && <span className="text-xs">✓</span>}
+              {cat.label}
             </button>
           ))}
         </div>
-      </div>
 
-      {/* Pattern Type */}
-      <div>
-        <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-3">
-          Pattern Weave
-        </h4>
-        <div className="flex flex-wrap gap-1.5">
-          {ALL_PATTERNS.map((pat) => (
-            <button
-              key={pat.id}
-              onClick={() => setSelectedPattern(pat.id)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                selectedPattern === pat.id
-                  ? 'border-terracotta bg-terracotta/10 text-terracotta font-bold'
-                  : 'border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300'
-              }`}
-            >
-              {pat.label}
-            </button>
-          ))}
-        </div>
-      </div>
+        {/* Action & Filter Bar (Zara Inspired) */}
+        <div className="flex items-center justify-between pb-6 mb-8 border-b border-black/10 dark:border-white/10 text-xs font-bold uppercase tracking-widest gap-4">
+          {/* Left: Filter Drawer Trigger */}
+          <button
+            onClick={() => setIsFilterDrawerOpen(true)}
+            className="flex items-center gap-2 text-black dark:text-white hover:opacity-70 transition-opacity"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span>
+              FILTERS {activeFilterCount > 0 && `(${activeFilterCount})`}
+            </span>
+          </button>
 
-      {/* Size Checkboxes */}
-      <div>
-        <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-3">
-          Available Sizes
-        </h4>
-        <div className="flex flex-wrap gap-2">
-          {ALL_SIZES.map((size) => (
-            <button
-              key={size}
-              onClick={() => toggleSize(size)}
-              className={`min-w-9 h-9 px-2 rounded-xl text-xs font-bold border transition-all ${
-                selectedSizes.includes(size)
-                  ? 'border-terracotta bg-terracotta text-white shadow-sm'
-                  : 'border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:border-stone-400'
-              }`}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Price Range */}
-      <div>
-        <div className="flex justify-between items-center mb-2">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text">
-            Price Range
-          </h4>
-          <span className="text-xs font-bold text-terracotta">
-            Up to {formatPrice(priceRange[1])}
-          </span>
-        </div>
-        <input
-          type="range"
-          min="1000"
-          max="8000"
-          step="250"
-          value={priceRange[1]}
-          onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-          className="w-full accent-terracotta cursor-pointer"
-        />
-        <div className="flex justify-between text-[11px] text-secondary-gray mt-1">
-          <span>₹1,000</span>
-          <span>₹8,000</span>
-        </div>
-      </div>
-
-      {/* Collections Dropdown */}
-      <div>
-        <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal dark:text-dark-text mb-2">
-          Collection Theme
-        </h4>
-        <select
-          value={selectedCollection}
-          onChange={(e) => setSelectedCollection(e.target.value)}
-          className="w-full text-xs p-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-charcoal dark:text-dark-text focus:outline-none focus:ring-1 focus:ring-terracotta"
-        >
-          <option value="all">All Themes</option>
-          {COLLECTIONS.map((c) => (
-            <option key={c.id} value={c.name}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Toggles */}
-      <div className="space-y-3 pt-2 border-t border-stone-100 dark:border-stone-800 text-xs">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={inStockOnly}
-            onChange={(e) => setInStockOnly(e.target.checked)}
-            className="rounded text-terracotta focus:ring-terracotta w-4 h-4"
-          />
-          <span className="text-stone-700 dark:text-stone-300 font-medium">In Stock Only</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={discountOnly}
-            onChange={(e) => setDiscountOnly(e.target.checked)}
-            className="rounded text-terracotta focus:ring-terracotta w-4 h-4"
-          />
-          <span className="text-stone-700 dark:text-stone-300 font-medium">On Sale Only</span>
-        </label>
-      </div>
-
-      {/* Clear Filters Button */}
-      {hasActiveFilters && (
-        <button
-          onClick={handleClearAll}
-          className="w-full py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 text-xs font-semibold text-secondary-gray hover:text-terracotta hover:border-terracotta flex items-center justify-center gap-1.5 transition-colors"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>Reset All Filters</span>
-        </button>
-      )}
-    </div>
-  );
-
-  return (
-    <>
-      <SEO
-        title="Shop All Premium Checkered Shirts | CHEXY HUB"
-        description="Browse the full collection of men, women, kids, and matching family checkered shirts."
-      />
-
-      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        {/* Page Header */}
-        <div className="mb-8 pb-6 border-b border-stone-200 dark:border-stone-800">
-          <span className="text-xs uppercase font-bold tracking-widest text-terracotta block mb-1">
-            Catalogue
-          </span>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal dark:text-dark-text capitalize">
-            {category === 'all'
-              ? 'All Checkered Shirts'
-              : `${category}'s Collection`}
-          </h1>
-          <p className="text-xs sm:text-sm text-secondary-gray mt-2">
-            Showing {filteredProducts.length} authentic checkered designs crafted with long-staple cotton.
-          </p>
-        </div>
-
-        {/* Action Bar: Search Bar, Mobile Filter Trigger, Sort Dropdown */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          {/* Quick Search */}
-          <div className="relative flex-1 max-w-xs">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search in this catalogue..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs pl-9 pr-8 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-charcoal dark:text-dark-text focus:outline-none focus:ring-1 focus:ring-terracotta"
-            />
-            {searchQuery && (
+          {/* Right: Grid Switcher & Sort */}
+          <div className="flex items-center gap-6">
+            {/* 2-Col vs 4-Col Grid Toggle (Desktop) */}
+            <div className="hidden sm:flex items-center gap-2 text-stone-400">
               <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-charcoal"
+                onClick={() => setGridColumns(2)}
+                className={`p-1 transition-colors ${gridColumns === 2 ? 'text-black dark:text-white' : 'hover:text-black dark:hover:text-white'}`}
+                title="Editorial 2-Column View"
               >
-                <X className="w-3.5 h-3.5" />
+                <Columns className="w-4 h-4" />
               </button>
-            )}
-          </div>
-
-          <div className="flex items-center gap-3 ml-auto">
-            {/* Mobile Filter Button */}
-            <button
-              onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden px-4 py-2.5 rounded-xl glass dark:glass-dark text-xs font-semibold text-charcoal dark:text-dark-text flex items-center gap-2 border border-stone-200 dark:border-stone-700 shadow-sm"
-            >
-              <SlidersHorizontal className="w-4 h-4 text-terracotta" />
-              <span>Filters</span>
-              {hasActiveFilters && (
-                <span className="w-2 h-2 rounded-full bg-terracotta" />
-              )}
-            </button>
+              <button
+                onClick={() => setGridColumns(4)}
+                className={`p-1 transition-colors ${gridColumns === 4 ? 'text-black dark:text-white' : 'hover:text-black dark:hover:text-white'}`}
+                title="Standard 4-Column Catalogue"
+              >
+                <Grid className="w-4 h-4" />
+              </button>
+            </div>
 
             {/* Sort Selector */}
             <div className="flex items-center gap-2">
-              <span className="text-xs text-secondary-gray hidden sm:inline">Sort:</span>
+              <span className="text-stone-400 hidden sm:inline">SORT:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-xs font-semibold px-3 py-2.5 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-charcoal dark:text-dark-text focus:outline-none focus:ring-1 focus:ring-terracotta"
+                className="bg-transparent text-black dark:text-white font-bold uppercase tracking-wider text-[11px] focus:outline-none cursor-pointer"
               >
-                <option value="featured">Featured First</option>
-                <option value="newest">Newest Arrivals</option>
-                <option value="bestselling">Best Selling</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="rating">Highest Rated</option>
+                <option value="featured" className="bg-white dark:bg-black">Featured</option>
+                <option value="newest" className="bg-white dark:bg-black">New Arrivals</option>
+                <option value="price-asc" className="bg-white dark:bg-black">Price: Low to High</option>
+                <option value="price-desc" className="bg-white dark:bg-black">Price: High to Low</option>
               </select>
             </div>
           </div>
         </div>
 
-        {/* Active Filter Chips */}
-        {hasActiveFilters && (
-          <div className="flex flex-wrap items-center gap-2 mb-8">
-            <span className="text-xs text-secondary-gray font-medium">Active:</span>
-            {category !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-stone-200 dark:bg-stone-800 text-charcoal dark:text-dark-text">
-                <span>Category: {category}</span>
-                <button onClick={() => setCategory('all')}>
-                  <X className="w-3 h-3 text-stone-500" />
-                </button>
-              </span>
-            )}
-            {selectedPattern !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-stone-200 dark:bg-stone-800 text-charcoal dark:text-dark-text">
-                <span>Pattern: {selectedPattern}</span>
-                <button onClick={() => setSelectedPattern('all')}>
-                  <X className="w-3 h-3 text-stone-500" />
-                </button>
-              </span>
-            )}
-            {selectedCollection !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-stone-200 dark:bg-stone-800 text-charcoal dark:text-dark-text">
-                <span>Theme: {selectedCollection}</span>
-                <button onClick={() => setSelectedCollection('all')}>
-                  <X className="w-3 h-3 text-stone-500" />
-                </button>
-              </span>
-            )}
-            {selectedSizes.map((sz) => (
-              <span
-                key={sz}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs bg-stone-200 dark:bg-stone-800 text-charcoal dark:text-dark-text"
-              >
-                <span>Size: {sz}</span>
-                <button onClick={() => toggleSize(sz)}>
-                  <X className="w-3 h-3 text-stone-500" />
-                </button>
-              </span>
+        {/* Product Grid */}
+        {filteredProducts.length > 0 ? (
+          <div
+            className={`grid gap-x-4 gap-y-12 sm:gap-x-6 sm:gap-y-16 ${
+              gridColumns === 2
+                ? 'grid-cols-1 sm:grid-cols-2'
+                : 'grid-cols-2 md:grid-cols-4'
+            }`}
+          >
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickView={(p) => setQuickViewProduct(p)}
+              />
             ))}
-            <button
-              onClick={handleClearAll}
-              className="text-xs font-semibold text-terracotta hover:underline ml-2"
-            >
-              Clear All
-            </button>
+          </div>
+        ) : (
+          <div className="py-24 text-center max-w-md mx-auto space-y-4">
+            <h3 className="font-serif text-2xl font-normal">NO PIECES MATCH YOUR CRITERIA</h3>
+            <p className="text-xs text-stone-500 font-light">
+              Try adjusting your weave type, size, or price filters to explore the rest of the collection.
+            </p>
+            <div className="pt-2">
+              <button onClick={handleClearAll} className="btn-fashion-primary">
+                Clear All Filters
+              </button>
+            </div>
           </div>
         )}
-
-        {/* Layout: Sidebar + Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Desktop Filter Sidebar */}
-          <aside className="hidden lg:block lg:col-span-1 p-6 rounded-3xl glass dark:glass-dark border border-stone-200/80 dark:border-stone-800 self-start sticky top-24 shadow-sm">
-            <div className="flex items-center justify-between pb-4 mb-4 border-b border-stone-200 dark:border-stone-800">
-              <h3 className="font-serif font-bold text-base flex items-center gap-2">
-                <Filter className="w-4 h-4 text-terracotta" />
-                <span>Filters</span>
-              </h3>
-              {hasActiveFilters && (
-                <button
-                  onClick={handleClearAll}
-                  className="text-xs text-terracotta hover:underline font-semibold"
-                >
-                  Reset
-                </button>
-              )}
-            </div>
-            <FilterContent />
-          </aside>
-
-          {/* Product Grid Area */}
-          <main className="lg:col-span-3">
-            {filteredProducts.length === 0 ? (
-              <div className="py-20 flex flex-col items-center justify-center text-center p-8 rounded-3xl glass dark:glass-dark border border-stone-200 dark:border-stone-800">
-                <div className="w-16 h-16 rounded-full bg-terracotta/10 text-terracotta flex items-center justify-center mb-4">
-                  <Filter className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-2xl font-bold mb-2">
-                  No matching shirts found
-                </h3>
-                <p className="text-sm text-secondary-gray max-w-sm mb-6">
-                  Try adjusting your filters, price range, or searching for other checkered styles.
-                </p>
-                <button
-                  onClick={handleClearAll}
-                  className="px-6 py-2.5 rounded-full bg-terracotta hover:bg-terracotta-hover text-white text-xs font-semibold transition-colors"
-                >
-                  Reset All Filters
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onQuickView={(p) => setQuickViewProduct(p)}
-                  />
-                ))}
-              </div>
-            )}
-          </main>
-        </div>
       </div>
 
-      {/* Mobile Filter Slide-out Drawer */}
-      {isMobileFilterOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden lg:hidden">
+      {/* Slide-In Minimalist Filter Drawer */}
+      {isFilterDrawerOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
-            onClick={() => setIsMobileFilterOpen(false)}
+            onClick={() => setIsFilterDrawerOpen(false)}
           />
-          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-            <div className="w-screen max-w-xs glass-drawer shadow-2xl flex flex-col p-6 text-charcoal dark:text-dark-text overflow-y-auto no-scrollbar">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-stone-200 dark:border-stone-800">
-                <h3 className="font-serif font-bold text-lg flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-terracotta" />
-                  <span>Filter Products</span>
-                </h3>
+
+          {/* Drawer Body */}
+          <div className="relative w-full max-w-md bg-white dark:bg-[#121212] h-full shadow-2xl p-8 z-10 overflow-y-auto flex flex-col justify-between">
+            <div className="space-y-8">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-6 border-b border-black/10 dark:border-white/10">
+                <span className="text-xs font-bold uppercase tracking-[0.2em]">
+                  FILTERS
+                </span>
                 <button
-                  onClick={() => setIsMobileFilterOpen(false)}
-                  className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800"
+                  onClick={() => setIsFilterDrawerOpen(false)}
+                  className="p-1 hover:opacity-60 transition-opacity"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <FilterContent />
-
-              <div className="pt-6 mt-6 border-t border-stone-200 dark:border-stone-800">
-                <button
-                  onClick={() => setIsMobileFilterOpen(false)}
-                  className="w-full py-3 rounded-xl bg-terracotta text-white font-semibold text-xs shadow-md"
-                >
-                  Show Results ({filteredProducts.length})
-                </button>
+              {/* Weave Type */}
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block">
+                  Pattern Architecture
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {ALL_PATTERNS.map((pat) => (
+                    <button
+                      key={pat.id}
+                      onClick={() => setSelectedPattern(pat.id)}
+                      className={`px-3 py-1.5 text-xs font-medium uppercase tracking-wider border transition-all ${
+                        selectedPattern === pat.id
+                          ? 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black'
+                          : 'border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300'
+                      }`}
+                    >
+                      {pat.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Size Selector */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+                    Available Sizes {selectedSizes.length > 0 && `(${selectedSizes.length})`}
+                  </span>
+                  {selectedSizes.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSizes([])}
+                      className="text-[10px] uppercase tracking-wider text-stone-500 hover:text-black dark:hover:text-white underline transition-colors"
+                    >
+                      Clear ({selectedSizes.length})
+                    </button>
+                  )}
+                </div>
+
+                {/* If showing both adult and kids (e.g. All / Family) */}
+                {availableSizesToDisplay.adult.length > 0 && availableSizesToDisplay.kids.length > 0 ? (
+                  <div className="space-y-3.5">
+                    {/* Adult Sizing */}
+                    <div>
+                      <span className="text-[9px] font-semibold tracking-wider text-stone-400 dark:text-stone-500 uppercase block mb-1.5">
+                        Adult Sizing
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {availableSizesToDisplay.adult.map((size) => {
+                          const isSelected = selectedSizes.includes(size);
+                          return (
+                            <button
+                              key={size}
+                              type="button"
+                              onClick={() => toggleSize(size)}
+                              className={`min-w-[42px] h-9 px-2.5 text-xs font-semibold uppercase tracking-wider border transition-all flex items-center justify-center whitespace-nowrap ${
+                                isSelected
+                                  ? 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                                  : 'border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-300 bg-white/50 dark:bg-stone-900/50 hover:border-black dark:hover:border-white'
+                              }`}
+                            >
+                              {size}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Junior Sizing */}
+                    <div>
+                      <span className="text-[9px] font-semibold tracking-wider text-stone-400 dark:text-stone-500 uppercase block mb-1.5">
+                        Junior Sizing (Age)
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {availableSizesToDisplay.kids.map((size) => {
+                          const isSelected = selectedSizes.includes(size);
+                          return (
+                            <button
+                              key={size}
+                              type="button"
+                              onClick={() => toggleSize(size)}
+                              className={`min-w-[58px] h-9 px-3 text-xs font-semibold uppercase tracking-wider border transition-all flex items-center justify-center whitespace-nowrap ${
+                                isSelected
+                                  ? 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                                  : 'border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-300 bg-white/50 dark:bg-stone-900/50 hover:border-black dark:hover:border-white'
+                              }`}
+                            >
+                              {size}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Single Category Sizing (Men, Women, or Kids) */
+                  <div className="flex flex-wrap gap-2">
+                    {(availableSizesToDisplay.adult.length > 0
+                      ? availableSizesToDisplay.adult
+                      : availableSizesToDisplay.kids
+                    ).map((size) => {
+                      const isSelected = selectedSizes.includes(size);
+                      const isKids = size.includes('Y');
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          onClick={() => toggleSize(size)}
+                          className={`${
+                            isKids ? 'min-w-[58px] px-3' : 'min-w-[42px] px-2.5'
+                          } h-9 text-xs font-semibold uppercase tracking-wider border transition-all flex items-center justify-center whitespace-nowrap ${
+                            isSelected
+                              ? 'border-black dark:border-white bg-black dark:bg-white text-white dark:text-black shadow-sm'
+                              : 'border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-300 bg-white/50 dark:bg-stone-900/50 hover:border-black dark:hover:border-white'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Collection Theme */}
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400 block">
+                  Curated Collection Theme
+                </span>
+                <select
+                  value={selectedCollection}
+                  onChange={(e) => setSelectedCollection(e.target.value)}
+                  className="w-full text-xs font-medium uppercase p-3 border border-stone-300 dark:border-stone-700 bg-transparent text-black dark:text-white focus:outline-none"
+                >
+                  <option value="all" className="bg-white dark:bg-black">All Themes</option>
+                  {COLLECTIONS.map((c) => (
+                    <option key={c.id} value={c.name} className="bg-white dark:bg-black">
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Price Range */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-stone-400">
+                    Max Price
+                  </span>
+                  <span className="text-xs font-bold">
+                    {formatPrice(priceRange[1])}
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="1000"
+                  max="8000"
+                  step="250"
+                  value={priceRange[1]}
+                  onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
+                  className="w-full accent-black dark:accent-white cursor-pointer"
+                />
+              </div>
+
+              {/* In Stock Toggle */}
+              <div className="pt-2">
+                <label className="flex items-center gap-3 cursor-pointer text-xs font-medium uppercase tracking-wider">
+                  <input
+                    type="checkbox"
+                    checked={inStockOnly}
+                    onChange={(e) => setInStockOnly(e.target.checked)}
+                    className="accent-black dark:accent-white w-4 h-4"
+                  />
+                  <span>In Stock Only</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Bottom Actions */}
+            <div className="pt-8 border-t border-black/10 dark:border-white/10 flex gap-3">
+              <button
+                onClick={handleClearAll}
+                className="flex-1 py-3 border border-black dark:border-white text-xs font-bold uppercase tracking-widest text-center"
+              >
+                Reset
+              </button>
+              <button
+                onClick={() => setIsFilterDrawerOpen(false)}
+                className="flex-1 py-3 bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-widest text-center"
+              >
+                Apply
+              </button>
             </div>
           </div>
         </div>
@@ -543,9 +522,10 @@ export function Shop({ defaultCategory = 'all' }) {
       {quickViewProduct && (
         <QuickViewModal
           product={quickViewProduct}
+          isOpen={!!quickViewProduct}
           onClose={() => setQuickViewProduct(null)}
         />
       )}
-    </>
+    </div>
   );
 }
